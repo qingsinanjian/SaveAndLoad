@@ -16,9 +16,20 @@ public class GunManager : MonoBehaviour
     public GameObject bulletGo;
     public Transform firePosition;
     public float force = 2000;
+    private AudioSource bulletSound;
+
+    private void Awake()
+    {
+        bulletSound = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
+        if(GameManager._instance.isPaused)
+        {
+            return;
+        }
+
         shootTimer += Time.deltaTime;
         if(shootTimer > shootTime)
         {
@@ -28,7 +39,9 @@ public class GunManager : MonoBehaviour
                 bulletCurrent.GetComponent<Rigidbody>().AddForce(transform.forward * force);
                 this.GetComponent<Animation>().Play();
                 shootTimer = 0;
+                bulletSound.Play();
                 UIManager.instance.AddShootNum();
+
             }
         }
 

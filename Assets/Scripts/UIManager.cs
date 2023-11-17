@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     public int shootNum;
     public int score;
 
+    public Toggle musicToggle;
+    public AudioSource musicAudio;
+    private bool musicOn = true;
+
     private void Awake()
     {
         instance = this;
@@ -21,6 +25,7 @@ public class UIManager : MonoBehaviour
     {
         shootNumText.text = shootNum.ToString();
         scoreText.text = score.ToString();
+        MusicAudioSwitch();
     }
 
     public void AddShootNum()
@@ -31,5 +36,19 @@ public class UIManager : MonoBehaviour
     public void AddScore()
     {
         score++;
+    }
+
+    private void MusicAudioSwitch()
+    {
+        if(musicToggle.isOn)
+        {
+            musicOn = true;
+            musicAudio.enabled = true;
+        }
+        else
+        {
+            musicOn = false;
+            musicAudio.enabled = false;
+        }
     }
 }

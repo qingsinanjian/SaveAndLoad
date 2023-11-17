@@ -12,7 +12,6 @@ public class TargetManager : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         foreach (var monster in monsters)
@@ -58,12 +57,12 @@ public class TargetManager : MonoBehaviour
 
     public void UpdateMonsters()
     {
+        StopAllCoroutines();
         if (activeMonster)
         {
-            StopAllCoroutines();
             activeMonster.SetActive(false);
             activeMonster = null;
-            StartCoroutine(AliveTimer());
         }
+        StartCoroutine(AliveTimer());
     }
 }

@@ -8,6 +8,8 @@ public class MonsterManager : MonoBehaviour
     public AnimationClip idleClip;
     public AnimationClip dieClip;
 
+    public AudioSource kickAudio;
+
     private void Awake()
     {
         ani = GetComponent<Animation>();
@@ -18,6 +20,7 @@ public class MonsterManager : MonoBehaviour
         if(collision.transform.tag == "Bullet")
         {
             Destroy(collision.gameObject);
+            kickAudio.Play();
             this.GetComponent<BoxCollider>().enabled = false;
             ani.clip = dieClip;
             ani.Play();
