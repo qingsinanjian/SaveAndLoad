@@ -14,18 +14,34 @@ public class UIManager : MonoBehaviour
 
     public Toggle musicToggle;
     public AudioSource musicAudio;
-    private bool musicOn = true;
 
     private void Awake()
     {
         instance = this;
+        if (PlayerPrefs.HasKey("MusicOn"))
+        {
+            if(PlayerPrefs.GetInt("MusicOn") == 1)
+            {
+                musicToggle.isOn = true;
+                musicAudio.enabled = true;
+            }
+            else
+            {
+                musicToggle.isOn = false;
+                musicAudio.enabled = false;
+            }
+        }
+        else
+        {
+            musicToggle.isOn = true;
+            musicAudio.enabled = true;
+        }
     }
 
     private void Update()
     {
         shootNumText.text = shootNum.ToString();
         scoreText.text = score.ToString();
-        MusicAudioSwitch();
     }
 
     public void AddShootNum()
@@ -38,17 +54,18 @@ public class UIManager : MonoBehaviour
         score++;
     }
 
-    private void MusicAudioSwitch()
+    public void MusicAudioSwitch()
     {
         if(musicToggle.isOn)
         {
-            musicOn = true;
             musicAudio.enabled = true;
+            PlayerPrefs.SetInt("MusicOn", 1);
         }
         else
         {
-            musicOn = false;
             musicAudio.enabled = false;
+            PlayerPrefs.SetInt("MusicOn", 0);
         }
+        PlayerPrefs.Save();
     }
 }

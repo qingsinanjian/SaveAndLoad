@@ -10,6 +10,8 @@ public class MonsterManager : MonoBehaviour
 
     public AudioSource kickAudio;
 
+    public int monsterType;
+
     private void Awake()
     {
         ani = GetComponent<Animation>();
@@ -37,6 +39,6 @@ public class MonsterManager : MonoBehaviour
     IEnumerator DeActivate()
     {
         yield return new WaitForSeconds(0.85f);
-        TargetManager.instance.UpdateMonsters();
+        this.GetComponentInParent<TargetManager>().UpdateMonsters();
     }
 }

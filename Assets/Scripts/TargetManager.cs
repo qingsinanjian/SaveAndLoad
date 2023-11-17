@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
-    public static TargetManager instance;
     public GameObject[] monsters;
     public GameObject activeMonster;
-    private void Awake()
-    {
-        instance = this;
-    }
+
+    public int targetPosition;
 
     void Start()
     {
@@ -58,11 +55,26 @@ public class TargetManager : MonoBehaviour
     public void UpdateMonsters()
     {
         StopAllCoroutines();
-        if (activeMonster)
+        if (activeMonster != null)
+        {
+            activeMonster.SetActive(false);
+            activeMonster.GetComponent<BoxCollider>().enabled = false;
+            activeMonster = null;
+        }
+        StartCoroutine(AliveTimer());
+    }
+
+    public void ActivateMonsterByType(int type)
+    {
+        StopAllCoroutines();
+        if (activeMonster != null)
         {
             activeMonster.SetActive(false);
             activeMonster = null;
         }
-        StartCoroutine(AliveTimer());
+        activeMonster = monsters[type];
+        activeMonster.SetActive(true);
+        activeMonster.GetComponent<BoxCollider>().enabled = true;
+        StartCoroutine(DeathTimer());
     }
 }
