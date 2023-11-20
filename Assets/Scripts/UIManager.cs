@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     public Toggle musicToggle;
     public AudioSource musicAudio;
 
+    public Text messageText;
+
     private void Awake()
     {
         instance = this;
@@ -67,5 +69,10 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetInt("MusicOn", 0);
         }
         PlayerPrefs.Save();
+    }
+
+    public void ShowMessage(string str)
+    {
+        messageText.text = str;
     }
 }
